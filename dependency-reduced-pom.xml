@@ -27,7 +27,7 @@
               <transformers>
                 <transformer />
                 <transformer>
-                  <mainClass>com.example.blogverse.BlogVerseApplication</mainClass>
+                  <mainClass>org.example.blogverse.BlogVerseApplication</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -49,8 +49,28 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>clojars</id>
+      <name>Clojars repository</name>
+      <url>https://clojars.org/repo</url>
+    </repository>
+    <repository>
+      <id>phonepe-releases</id>
+      <url>artifactory.phonepe.com/content/repositories/releases</url>
+    </repository>
+    <repository>
+      <id>phonepe-snapshots</id>
+      <url>artifactory.phonepe.com/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
   <properties>
+    <guice.version>4.2.0</guice.version>
+    <lombok.version>1.18.2</lombok.version>
+    <dropwizard.sharding.version>1.3.13-8</dropwizard.sharding.version>
     <dropwizard.version>1.3.13</dropwizard.version>
+    <mysql.connector.version>5.1.36</mysql.connector.version>
+    <mariadb.javaclient.version>2.2.0</mariadb.javaclient.version>
   </properties>
 </project>
 

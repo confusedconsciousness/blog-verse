@@ -1,2 +1,10 @@
 org/example/blogverse/BlogVerseApplication.class
+org/example/blogverse/repositories/implementation/UserRepositoryImplementation.class
+org/example/blogverse/models/User$UserBuilder.class
+org/example/blogverse/BlogVerseModule.class
+org/example/blogverse/BlogVerseApplication$1.class
+org/example/blogverse/utils/AccessTokenUtil.class
+org/example/blogverse/models/User.class
 org/example/blogverse/BlogVerseConfiguration.class
+org/example/blogverse/resources/BlogVerseResource.class
+org/example/blogverse/repositories/UserRepository.class

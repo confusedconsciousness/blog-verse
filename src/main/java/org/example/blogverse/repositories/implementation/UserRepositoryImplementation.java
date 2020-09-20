@@ -7,6 +7,7 @@ import org.example.blogverse.models.User;
 import org.example.blogverse.repositories.UserRepository;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 @Singleton
 public class UserRepositoryImplementation implements UserRepository {
@@ -36,4 +37,29 @@ public class UserRepositoryImplementation implements UserRepository {
     public Optional<User> getUser(String email) throws Exception {
         return userLookupDao.get(email);
     }
+
+    @Override
+    public boolean update(String email, Function<Optional<User>, User> updater) {
+        return userLookupDao.update(email, updater);
+    }
+
+    @Override
+    public boolean isAuthorised(String token, String email) throws Exception {
+        // first we will fetch the user using the email provided to us
+        Optional<User> user = userLookupDao.get(email);
+        // let's check whether there is such user or not
+        if(!user.isPresent()) {
+            // no such user is present, so of course he is not authorised as well
+            return false;
+        } else {
+            // if he is present, check whether the token that he came up with is still valid
+            if(user.get().getToken().equals(token)) {
+                // if token matches, it means he is authorised
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

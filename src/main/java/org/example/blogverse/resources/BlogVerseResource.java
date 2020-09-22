@@ -9,27 +9,37 @@ package org.example.blogverse.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import org.example.blogverse.models.Post;
 import org.example.blogverse.models.User;
+import org.example.blogverse.repositories.PostRepository;
 import org.example.blogverse.repositories.UserRepository;
 import org.example.blogverse.utils.AccessTokenUtil;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-@Path("/blog")
+@Path("/v0/blog")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class BlogVerseResource {
     @Inject
     private UserRepository userRepository;
 
-    @Path("/createUser")
+    @Inject
+    private PostRepository postRepository;
+
+
+    // *************************     Resources related to USER   ******************************
+
+
+    @Path("/create-user")
     @POST
     @Timed
     public Response createUser(@Valid User user) throws Exception {
@@ -68,6 +78,65 @@ public class BlogVerseResource {
         }
         return Response.status(403).build();
     }
+
+    // *************************     Resources related to POSTS   ******************************
+
+    @Path("/posts")
+    @GET
+    @Timed
+    public Response getAllPosts() throws Exception {
+        // shows all the post present
+        return Response.ok(postRepository.getAllPost()).build();
+    }
+
+    @Path("/posts/email")
+    @GET
+    @Timed
+    public Response getPostsForUser(
+            @NotNull
+            @NotEmpty
+            @QueryParam("email") String email
+    ) throws Exception{
+        // shows the post specific to a user uniquely identified by email
+        return Response.ok(postRepository.getPostForUser(email)).build();
+    }
+
+    @Path("/posts/postId")
+    @GET
+    @Timed
+    public Response getPost(
+            @NotNull
+            @NotEmpty
+            @QueryParam("postId") String postId
+    ) throws Exception{
+        // gives you post having postId that matches your postId
+        return Response.ok(postRepository.getPost(postId)).build();
+    }
+
+    @Path("/create-post")
+    @POST
+    @Timed
+    public Response createPost(
+            @Valid Post post,
+            @HeaderParam("Token") String token,
+            @HeaderParam("Email") String email
+    ) throws Exception {
+        // creates a post
+        // we need to make sure that the author that is posting is authenticated or authorised to do so
+        Optional<User> user = userRepository.getUser(email);
+        if(!user.isPresent()) {
+            // if there is no such user present, we shall throw 403 error
+            return Response.status(403).build();
+        }
+        // if the user is present, let's see if the token is valid
+        if(isAuthenticated(token, email)) {
+            // generate a random postID to associate the post with
+            post.setPostId(UUID.randomUUID().toString());
+            return Response.ok(postRepository.save(post)).build();
+        }
+        return Response.status(403).build();
+    }
+
 
 
     public boolean isAuthenticated(String token, String email) throws Exception {

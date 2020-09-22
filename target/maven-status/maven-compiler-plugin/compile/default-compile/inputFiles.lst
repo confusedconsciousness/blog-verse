@@ -1,6 +1,9 @@
+/Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/models/Post.java
 /Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/utils/AccessTokenUtil.java
 /Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/repositories/UserRepository.java
+/Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/repositories/PostRepository.java
 /Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/resources/BlogVerseResource.java
+/Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/repositories/implementation/PostRepositoryImplementation.java
 /Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/BlogVerseConfiguration.java
 /Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/models/User.java
 /Users/Chandravanshi/Desktop/Development/Java/BlogVerse/src/main/java/org/example/blogverse/BlogVerseModule.java

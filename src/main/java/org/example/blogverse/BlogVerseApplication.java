@@ -6,6 +6,7 @@ import io.appform.dropwizard.sharding.config.ShardedHibernateFactory;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.example.blogverse.models.Post;
 import org.example.blogverse.models.User;
 import ru.vyarus.dropwizard.guice.GuiceBundle;
 
@@ -23,7 +24,7 @@ public class BlogVerseApplication extends Application<BlogVerseConfiguration> {
     public void initialize(Bootstrap<BlogVerseConfiguration> bootstrap) {
         // here we will initialize our bundles
         this.dbShardingBundle = new DBShardingBundle<BlogVerseConfiguration>(
-                User.class
+                User.class, Post.class
         ) {
             @Override
             protected ShardedHibernateFactory getConfig(BlogVerseConfiguration blogVerseConfiguration) {
